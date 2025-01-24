@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zenpill_app/features/login_signup/pages/login_screen.dart';
 import 'package:zenpill_app/features/login_signup/pages/sign_up_screen.dart';
+import 'package:zenpill_app/features/login_signup/verify/verify_screen.dart';
 
 import 'core/generic_widgets/custom_text_form_field/bloc/text_form_field_cubit.dart';
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           child: SafeArea(
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
-              home: SignUpScreen(),
+              home: VerifyScreen(),
             ),
           ),
         ));
