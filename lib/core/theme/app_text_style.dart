@@ -7,6 +7,10 @@ class AppTextStyle {
       fontWeight: FontWeight.w400,
       fontSize: 16.sp,
       color: AppColors.fontColor16);
+  static TextStyle f16W400Primary = TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 16.sp,
+      color: AppColors.primaryColor);
 
   static const TextStyle f24W700White = TextStyle(
       fontWeight: FontWeight.w700,

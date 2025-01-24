@@ -7,4 +7,6 @@ class AppStrings {
   static const String verifyYourPhoneNumber = 'Verify Your Phone Number';
   static const String weHaveSentCodeTo = 'We have sent a 4-digit code to';
   static const String pleaseEnterItBelow = 'please enter it below.';
+  static const String resendCode = 'Resend Code';
+  static const String changePhoneNumber = 'Change Phone Number';
 }
