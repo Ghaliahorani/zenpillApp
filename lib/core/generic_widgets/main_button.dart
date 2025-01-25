@@ -20,24 +20,18 @@ class MainButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: isEnabled ? onPressed : null,
+      disabledColor: isEnabled ? fillColor : AppColors.cardBackground,
+
+      onPressed: onPressed,
       // تعطيل الزر إذا لم يكن مفعلاً
       color: fillColor,
       height: 48.h,
-      minWidth: 328.w,
+      minWidth: double.infinity,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(25.r),
       ),
       elevation: 0,
-      child: Text(
-        textButton,
-        style: textStyleButton.copyWith(
-          color: isEnabled
-              ? textStyleButton.color
-              : textStyleButton.color
-                  ?.withOpacity(0.5), // تخفيف لون النص إذا كان معطلاً
-        ),
-      ),
+      child: Text(textButton, style: textStyleButton),
     );
   }
 }

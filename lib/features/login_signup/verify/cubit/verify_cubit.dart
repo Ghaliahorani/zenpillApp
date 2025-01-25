@@ -1,20 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'capsule_state.dart';
+import 'verify_state.dart';
 
-class CapsuleCubit extends Cubit<CapsuleState> {
+class VerifyCubit extends Cubit<VerifyState> {
   final List<TextEditingController> controllers =
       List.generate(4, (_) => TextEditingController());
   final List<FocusNode> focusNodes = List.generate(4, (_) => FocusNode());
 
-  CapsuleCubit() : super(CapsuleState(activeIndex: 0));
+  VerifyCubit() : super(VerifyState(activeIndex: 0));
 
   // تفعيل الكبسولة التالية
   void activateNext(int currentIndex) {
     if (currentIndex < controllers.length - 1) {
       focusNodes[currentIndex + 1].requestFocus();
     }
-    emit(CapsuleState(activeIndex: currentIndex + 1));
+    emit(VerifyState(activeIndex: currentIndex + 1));
   }
 
   // التحقق إذا كانت كل الحقول ممتلئة
@@ -22,5 +22,15 @@ class CapsuleCubit extends Cubit<CapsuleState> {
     final allFilled =
         controllers.every((controller) => controller.text.isNotEmpty);
     emit(state.copyWith(allFieldsFilled: allFilled));
+  }
+
+  // تعيين حالة التحميل
+  void setLoading() {
+    emit(state.copyWith(isLoading: true));
+  }
+
+  // تعيين حالة تم التحميل
+  void setLoaded() {
+    emit(state.copyWith(isLoading: false));
   }
 }

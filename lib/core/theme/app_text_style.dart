@@ -6,7 +6,7 @@ class AppTextStyle {
   static TextStyle f16W400Black = TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: 16.sp,
-      color: AppColors.fontColor16);
+      color: AppColors.neutral50Color);
   static TextStyle f16W400Primary = TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: 16.sp,

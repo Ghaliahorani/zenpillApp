@@ -1,82 +1,111 @@
 import 'package:flutter/material.dart';
+import 'package:zenpill_app/core/constants/app_images.dart';
+import 'package:zenpill_app/core/generic_widgets/arrow_back_widget.dart';
+import 'package:zenpill_app/core/generic_widgets/custom_text_form_field/custom_text_form_field.dart';
+import 'package:zenpill_app/core/generic_widgets/login_signup_widgets/custom_inkwell.dart';
+import 'package:zenpill_app/core/theme/app_colors.dart';
+import 'package:zenpill_app/features/login_signup/generic_widgets/bottom_container.dart';
+import 'package:zenpill_app/features/login_signup/generic_widgets/welcome_container.dart';
+
+import '../../../core/constants/app_strings.dart';
+import '../../../core/generic_widgets/main_button.dart';
+import '../../../core/theme/app_text_style.dart';
+
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
+  TextEditingController _phone = TextEditingController();
+  TextEditingController _password = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  String phone = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ScreenOne(),
-      ),
-    );
-  }
-}
-
-
-class ScreenOne extends StatefulWidget {
-  @override
-  State<ScreenOne> createState() => _ScreenOneState();
-}
-
-class _ScreenOneState extends State<ScreenOne> {
-  final PageController _pageController = PageController(viewportFraction: 0.8);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ListView.separated(
-          controller: _pageController,
-          scrollDirection: Axis.horizontal,
-          itemCount: 10, // عدد العناصر
-          itemBuilder: (context, index) {
-            return Center(
-              child: AnimatedBuilder(
-                animation: _pageController,
-                builder: (context, child) {
-                  double value = 1.0;
-
-                  // التحقق من موقع العنصر داخل الـ PageView
-                  if (_pageController.position.haveDimensions) {
-                    value = _pageController.page! - index;
-                    value = (1 - value.abs()).clamp(0.0, 1.0);
-                  }
-
-                  // تكبير العنصر الأقرب
-                  double scale = Curves.easeOut.transform(value);
-                  double angle = (1 - value) * 0.3; // دوران بسيط للعنصر البعيد
-
-                  return Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.identity()
-                      ..scale(scale)
-                      ..rotateY(angle),
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.blue[(index + 1) * 100 % 900],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Item $index',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
+      backgroundColor: AppColors.backgroundColor,
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ArrowBackWidget(),
+              WelcomeContainer(
+                textTitle: AppStrings.yourNextAdventureAwaits,
+                textSubTitle: AppStrings.feelTheExtraordinary,
               ),
-            );
-          }, separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(
-              width: 100,
-            );
-        },
+              Form(
+                key: _formKey,
+                child: Column(
+                  spacing: 10,
+                  children: [
+                    CustomTextFormField(
+                      onChanged: (value) {
+                        phone = value;
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppStrings.errorPhoneEmpty;
+                        }
+                        if (!RegExp(r'^9\d{8}$').hasMatch(value)) {
+                          return AppStrings.phoneNumber;
+                        }
+                        return null;
+                      },
+                      controller: _phone,
+                      prefix: AppImages.phoneNumberIcon,
+                      hintText: AppStrings.phoneNumber,
+                    ),
+                    CustomTextFormField(
+                      onChanged: (value) {
+                        password = value;
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppStrings.errorPasswordEmpty;
+                        }
+                        if (!RegExp(
+                                r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{1,8}$')
+                            .hasMatch(value)) {
+                          return AppStrings.errorPassword;
+                        }
+                        return null;
+                      },
+                      controller: _password,
+                      prefix: AppImages.lockIcon,
+                      isPassword: true,
+                      hintText: AppStrings.enterPassword,
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CustomInkwell(text: AppStrings.forgotPassword, onTap: () {}),
+                ],
+              ),
+              MainButton(
+                  isEnabled: true,
+                  textButton: AppStrings.signUpButton,
+                  textStyleButton: AppTextStyle.f24W700White,
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('الرقم صحيح!')),
+                      );
+                    }
+                  }),
+              BottomContainer(
+                text1PrimryColor: '',
+                text1: '',
+                text2: AppStrings.dontHaveAccount,
+                text2Primry: AppStrings.signIn,
+                orSignWith: AppStrings.orLogInWith,
+              )
+            ],
+          ),
         ),
       ),
     );

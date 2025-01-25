@@ -41,6 +41,7 @@ class HalfCapsule extends StatelessWidget {
       ),
       child: Center(
         child: TextFormField(
+          cursorColor: AppColors.primaryColor,
           controller: numOfCodde,
           focusNode: focusNode,
           maxLength: 1,

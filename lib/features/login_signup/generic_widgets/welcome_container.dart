@@ -7,25 +7,24 @@ import '../../../core/generic_widgets/arrow_back_widget.dart';
 import '../../../core/theme/app_text_style.dart';
 
 class WelcomeContainer extends StatelessWidget {
-  const WelcomeContainer({super.key});
+  WelcomeContainer({super.key, this.textTitle, this.textSubTitle});
+
+  final String? textTitle;
+  final String? textSubTitle;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 378.sp,
-      height: 257.sp,
+      height: 270.sp,
       // color: Colors.yellow,
       child: Column(
         spacing: 4,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ArrowBackWidget(),
-              SizedBox(
-                width: 15,
-              ),
               Container(
                 width: 145.sp,
                 height: 140.sp,
@@ -34,18 +33,15 @@ class WelcomeContainer extends StatelessWidget {
                         image: AssetImage(AppImages.logoCups),
                         fit: BoxFit.cover)),
               ),
-              SizedBox(
-                width: 80.sp,
-              )
             ],
           ),
           Text(
-            AppStrings.JOINEXPERIENCE,
+            textTitle!,
             style: AppTextStyle.f24W700White,
             textAlign: TextAlign.center,
           ),
           Text(
-            AppStrings.CREATE_AN_ACCUNT,
+            textSubTitle!,
             style: AppTextStyle.f16W400Black,
             textAlign: TextAlign.center,
           ),

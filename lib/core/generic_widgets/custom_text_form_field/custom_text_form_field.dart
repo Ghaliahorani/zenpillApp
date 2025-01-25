@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zenpill_app/core/theme/app_text_style.dart';
 
 import '../../theme/app_colors.dart';
@@ -11,27 +12,36 @@ class CustomTextFormField extends StatelessWidget {
       {this.hintText,
       this.isPassword = false,
       this.isConfirmPassword = false,
-      required this.controller});
+      required this.controller,
+      required this.prefix,
+      this.onChanged,
+      this.validator});
 
   final String? hintText;
   bool isPassword;
   bool isConfirmPassword;
   TextEditingController controller;
+  final String prefix;
+  Function(dynamic)? onChanged;
+  String? Function(dynamic)? validator;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TextFormFieldCubit, TextFormFieldState>(
       builder: (context, state) {
         return TextFormField(
+          onChanged: onChanged,
+          validator: validator,
           controller: controller,
           decoration: InputDecoration(
             fillColor: AppColors.cardBackgroundColor,
-            filled: true,
+            prefixIcon: SvgPicture.asset(prefix),
+
             hintText: hintText,
             hintStyle: AppTextStyle.f16W400Black,
             border: UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide.none),
+                borderSide: BorderSide(color: AppColors.cardBackgroundColor)),
             // enabledBorder: UnderlineInputBorder(
             //     borderSide: BorderSide(color: Colors.black)),
             suffixIcon: Visibility(
